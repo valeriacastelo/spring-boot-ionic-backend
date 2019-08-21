@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nelioalves.backend.domain.Category;
 import com.nelioalves.backend.repositories.CategoryRepository;
+import com.nelioalves.backend.services.exception.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -17,7 +18,8 @@ public class CategoryService {
 	public Category find(Integer id) {
 		Optional<Category> op = repo.findById(id);
 		
-		return op.orElse(null);
+		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
+				+ "Id:[" + id + "] Type:[" + Category.class.getName() + "]"));
 	}
 
 }
