@@ -15,6 +15,7 @@ import com.nelioalves.backend.domain.City;
 import com.nelioalves.backend.domain.Client;
 import com.nelioalves.backend.domain.InvoicePayment;
 import com.nelioalves.backend.domain.Order;
+import com.nelioalves.backend.domain.OrderItem;
 import com.nelioalves.backend.domain.Payment;
 import com.nelioalves.backend.domain.Product;
 import com.nelioalves.backend.domain.State;
@@ -24,6 +25,7 @@ import com.nelioalves.backend.repositories.AddressRepository;
 import com.nelioalves.backend.repositories.CategoryRepository;
 import com.nelioalves.backend.repositories.CityRepository;
 import com.nelioalves.backend.repositories.ClientRepository;
+import com.nelioalves.backend.repositories.OrderItemRepository;
 import com.nelioalves.backend.repositories.OrderRepository;
 import com.nelioalves.backend.repositories.PaymentRepository;
 import com.nelioalves.backend.repositories.ProductRepository;
@@ -55,6 +57,9 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PaymentRepository paymentRepo;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootIonicBackendApplication.class, args);
@@ -122,6 +127,19 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		orderRepo.saveAll(Arrays.asList(ord1, ord2));
 		paymentRepo.saveAll(Arrays.asList(pay1, pay2));
 		
+		OrderItem item1 = new OrderItem(ord1, p1, 0.00, 1, 2000.00);
+		OrderItem item2 = new OrderItem(ord1, p3, 0.00, 2, 80.00);
+		OrderItem item3 = new OrderItem(ord2, p2, 100.00, 1, 800.00);
+		
+		ord1.getItens().addAll(Arrays.asList(item1, item2));
+		ord2.getItens().addAll(Arrays.asList(item3));
+		
+		
+		p1.getItens().addAll(Arrays.asList(item1));
+		p2.getItens().addAll(Arrays.asList(item3));
+		p3.getItens().addAll(Arrays.asList(item2));
+		
+		orderItemRepo.saveAll(Arrays.asList(item1, item2, item3));
 		
 	}
 

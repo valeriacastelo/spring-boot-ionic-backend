@@ -2,7 +2,9 @@ package com.nelioalves.backend.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -32,6 +35,11 @@ public class Product implements Serializable{
 	)
 	private List<Category> categories = new ArrayList<Category>();
 	
+	
+	@OneToMany(mappedBy = "id.product")
+	private Set<OrderItem> itens = new HashSet<OrderItem>();
+	
+	
 	public Product() {
 		
 	}
@@ -41,6 +49,17 @@ public class Product implements Serializable{
 		this.id = id;
 		this.name = name;
 		this.price = price;
+	}
+	
+	public List<Order> getOrders() {
+		
+		List<Order> orders = new ArrayList<Order>();
+		
+		for(OrderItem i : this.itens) {
+			orders.add(i.getOrder());
+		}
+		
+		return orders;
 	}
 
 	public Integer getId() {
@@ -68,6 +87,14 @@ public class Product implements Serializable{
 
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
+	}
+	
+	public Set<OrderItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<OrderItem> itens) {
+		this.itens = itens;
 	}
 
 	@Override
