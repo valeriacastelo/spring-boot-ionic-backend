@@ -1,5 +1,6 @@
 package com.nelioalves.backend;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.nelioalves.backend.domain.Address;
+import com.nelioalves.backend.domain.CardPayment;
 import com.nelioalves.backend.domain.Category;
 import com.nelioalves.backend.domain.City;
 import com.nelioalves.backend.domain.Client;
+import com.nelioalves.backend.domain.InvoicePayment;
+import com.nelioalves.backend.domain.Order;
+import com.nelioalves.backend.domain.Payment;
 import com.nelioalves.backend.domain.Product;
 import com.nelioalves.backend.domain.State;
 import com.nelioalves.backend.domain.enums.ClientType;
+import com.nelioalves.backend.domain.enums.PaymentStatus;
 import com.nelioalves.backend.repositories.AddressRepository;
 import com.nelioalves.backend.repositories.CategoryRepository;
 import com.nelioalves.backend.repositories.CityRepository;
 import com.nelioalves.backend.repositories.ClientRepository;
+import com.nelioalves.backend.repositories.OrderRepository;
+import com.nelioalves.backend.repositories.PaymentRepository;
 import com.nelioalves.backend.repositories.ProductRepository;
 import com.nelioalves.backend.repositories.StateRepository;
 
@@ -41,6 +49,12 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 	
 	@Autowired
 	private ClientRepository clientRepo;
+	
+	@Autowired
+	private OrderRepository orderRepo;
+	
+	@Autowired
+	private PaymentRepository paymentRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootIonicBackendApplication.class, args);
@@ -89,6 +103,24 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		clientRepo.save(cli1);
 		addressRepo.saveAll(Arrays.asList(add1, add2));
 		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		Order ord1 = new Order(null, sdf.parse("30/09/2017 10:32:00"), cli1, add1);
+		Order ord2 = new Order(null, sdf.parse("10/10/2017 19:35:00"), cli1, add2);
+		
+		Payment pay1 = new CardPayment(null, PaymentStatus.PAYED, ord1, 6);
+		ord1.setPayment(pay1);
+		
+		
+		Payment pay2 = new InvoicePayment(null, PaymentStatus.PENDING, ord2, sdf.parse("20/10/2017 23:59:59"), null);
+		ord2.setPayment(pay2);
+		
+		
+		cli1.getOrders().addAll(Arrays.asList(ord1));
+		
+		orderRepo.saveAll(Arrays.asList(ord1, ord2));
+		paymentRepo.saveAll(Arrays.asList(pay1, pay2));
 		
 		
 	}
