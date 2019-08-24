@@ -1,62 +1,95 @@
 package com.nelioalves.backend.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class State implements Serializable {
+public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
+	private String sreetAddress;
+	private String zipCode;
+	
+	@ManyToOne
+	@JoinColumn(name = "city_id")
+	private City city;
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "state")
-	private List<City> cities = new ArrayList<City>();
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
 	
-	public State() {
+	
+	public Address() {
 		
 	}
-
-	public State(Integer id, String name) {
+	
+	public Address(Integer id, String sreetAddress, String zipCode, City city, Client client) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.sreetAddress = sreetAddress;
+		this.zipCode = zipCode;
+		this.city = city;
+		this.client = client;
+		
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getSreetAddress() {
+		return sreetAddress;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public List<City> getCities() {
-		return cities;
+
+	public void setSreetAddress(String sreetAddress) {
+		this.sreetAddress = sreetAddress;
 	}
 
-	public void setCities(List<City> cities) {
-		this.cities = cities;
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+
+	public Client getClient() {
+		return client;
+	}
+
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override
@@ -75,7 +108,7 @@ public class State implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		State other = (State) obj;
+		Address other = (Address) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,5 +116,5 @@ public class State implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }

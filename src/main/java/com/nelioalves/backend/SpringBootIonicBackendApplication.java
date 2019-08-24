@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.nelioalves.backend.domain.Address;
 import com.nelioalves.backend.domain.Category;
 import com.nelioalves.backend.domain.City;
+import com.nelioalves.backend.domain.Client;
 import com.nelioalves.backend.domain.Product;
 import com.nelioalves.backend.domain.State;
+import com.nelioalves.backend.domain.enums.ClientType;
+import com.nelioalves.backend.repositories.AddressRepository;
 import com.nelioalves.backend.repositories.CategoryRepository;
 import com.nelioalves.backend.repositories.CityRepository;
+import com.nelioalves.backend.repositories.ClientRepository;
 import com.nelioalves.backend.repositories.ProductRepository;
 import com.nelioalves.backend.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CityRepository cityRepo;
+	
+	@Autowired
+	private AddressRepository addressRepo;
+	
+	@Autowired
+	private ClientRepository clientRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootIonicBackendApplication.class, args);
@@ -54,18 +65,31 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		State s1 = new State(null, "Minas Gerais");
 		State s2 = new State(null, "Sao Paulo");
 		
-		City c1 = new City(null, "Uberlandia", s1);
-		City c2 = new City(null, "Campinas", s2);
-		City c3 = new City(null, "Sao Paulo", s2);
+		City cit1 = new City(null, "Uberlandia", s1);
+		City cit2 = new City(null, "Campinas", s2);
+		City cit3 = new City(null, "Sao Paulo", s2);
 		
-		s1.getCities().addAll(Arrays.asList(c1));
-		s2.getCities().addAll(Arrays.asList(c2, c3));
+		s1.getCities().addAll(Arrays.asList(cit1));
+		s2.getCities().addAll(Arrays.asList(cit2, cit3));
 		
 		categoryRepo.saveAll(Arrays.asList(cat1, cat2));
 		productRepo.saveAll(Arrays.asList(p1,p2,p3));
 		
 		stateRepo.saveAll(Arrays.asList(s1,s2));
-		cityRepo.saveAll(Arrays.asList(c1,c2, c3));
+		cityRepo.saveAll(Arrays.asList(cit1,cit2, cit3));
+		
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.PERSON);
+		
+		Address add1 = new Address(null, "Apto 203, 300 Rua Flores, Jardim", "38220834", cit1, cli1);
+		Address add2 = new Address(null, "Sala 108, 105 Avenida Matos, Centro", "38777012", cit2, cli1);
+		
+		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+		cli1.getAddresses().addAll(Arrays.asList(add1, add2));
+		
+		clientRepo.save(cli1);
+		addressRepo.saveAll(Arrays.asList(add1, add2));
+		
+		
 		
 	}
 
