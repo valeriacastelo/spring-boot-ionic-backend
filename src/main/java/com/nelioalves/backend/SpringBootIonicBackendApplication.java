@@ -70,16 +70,16 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		Category cat1 = new Category(null, "Computing");
 		Category cat2 = new Category(null, "Office");
 		
-		Product p1 = new Product(null, "Computer", 2000.00);
-		Product p2 = new Product(null, "Printer", 800.00);
-		Product p3 = new Product(null, "Mouse", 80.00);
+		Product prod1 = new Product(null, "Computer", 2000.00);
+		Product prod2 = new Product(null, "Printer", 800.00);
+		Product prod3 = new Product(null, "Mouse", 80.00);
 		
-		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		cat2.getProducts().addAll(Arrays.asList(p2));
+		cat1.getProducts().addAll(Arrays.asList(prod1, prod2, prod3));
+		cat2.getProducts().addAll(Arrays.asList(prod2));
 		
-		p1.getCategories().addAll(Arrays.asList(cat1));
-		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
-		p3.getCategories().addAll(Arrays.asList(cat1));
+		prod1.getCategories().addAll(Arrays.asList(cat1));
+		prod2.getCategories().addAll(Arrays.asList(cat1, cat2));
+		prod3.getCategories().addAll(Arrays.asList(cat1));
 		
 		State s1 = new State(null, "Minas Gerais");
 		State s2 = new State(null, "Sao Paulo");
@@ -92,7 +92,7 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		s2.getCities().addAll(Arrays.asList(cit2, cit3));
 		
 		categoryRepo.saveAll(Arrays.asList(cat1, cat2));
-		productRepo.saveAll(Arrays.asList(p1,p2,p3));
+		productRepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		
 		stateRepo.saveAll(Arrays.asList(s1,s2));
 		cityRepo.saveAll(Arrays.asList(cit1,cit2, cit3));
@@ -127,17 +127,17 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		orderRepo.saveAll(Arrays.asList(ord1, ord2));
 		paymentRepo.saveAll(Arrays.asList(pay1, pay2));
 		
-		OrderItem item1 = new OrderItem(ord1, p1, 0.00, 1, 2000.00);
-		OrderItem item2 = new OrderItem(ord1, p3, 0.00, 2, 80.00);
-		OrderItem item3 = new OrderItem(ord2, p2, 100.00, 1, 800.00);
+		OrderItem item1 = new OrderItem(ord1, prod1, 0.00, 1, 2000.00);
+		OrderItem item2 = new OrderItem(ord1, prod3, 0.00, 2, 80.00);
+		OrderItem item3 = new OrderItem(ord2, prod2, 100.00, 1, 800.00);
 		
 		ord1.getItens().addAll(Arrays.asList(item1, item2));
 		ord2.getItens().addAll(Arrays.asList(item3));
 		
 		
-		p1.getItens().addAll(Arrays.asList(item1));
-		p2.getItens().addAll(Arrays.asList(item3));
-		p3.getItens().addAll(Arrays.asList(item2));
+		prod1.getItens().addAll(Arrays.asList(item1));
+		prod2.getItens().addAll(Arrays.asList(item3));
+		prod3.getItens().addAll(Arrays.asList(item2));
 		
 		orderItemRepo.saveAll(Arrays.asList(item1, item2, item3));
 		
