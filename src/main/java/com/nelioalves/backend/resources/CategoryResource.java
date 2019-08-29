@@ -24,14 +24,15 @@ public class CategoryResource {
 	private CategoryService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find (@PathVariable Integer id) {
-		Category category = service.find(id);
+	public ResponseEntity<Category> find (@PathVariable Integer id) {
 		
+		Category category = service.find(id);
 		return ResponseEntity.ok(category);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Category category) {
+		
 		Category inserted = service.insert(category);
 		
 		URI uri = ServletUriComponentsBuilder
@@ -41,6 +42,15 @@ public class CategoryResource {
 				.toUri();
 		
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update (@RequestBody Category category, @PathVariable Integer id) {				
+		
+		category.setId(id);
+		service.update(category);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
