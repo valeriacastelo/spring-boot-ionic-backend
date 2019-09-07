@@ -1,5 +1,6 @@
 package com.nelioalves.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,10 @@ public class CategoryService {
 		} catch(DataIntegrityViolationException ex) {
 			throw new DataIntegrityException("Not possible delete a Category with associated Products");
 		}
-		
+	}
+	
+	public List<Category> findAll() {
+		return repo.findAll();
 	}
 
 }

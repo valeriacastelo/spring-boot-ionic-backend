@@ -1,8 +1,8 @@
 package com.nelioalves.backend.resources;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nelioalves.backend.domain.Category;
+import com.nelioalves.backend.dto.CategoryDTO;
 import com.nelioalves.backend.services.CategoryService;
 
 @RestController
@@ -60,16 +61,12 @@ public class CategoryResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Category> list() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		
-		Category catComputing = new Category(1, "Computing");
-		Category catOffice = new Category(1, "Office");
+		List<Category> list = service.findAll();
+		List<CategoryDTO> listDTO = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
 		
-		List<Category> list = new ArrayList<Category>();
-		list.add(catComputing);
-		list.add(catOffice);
-		
-		return list;
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 }
