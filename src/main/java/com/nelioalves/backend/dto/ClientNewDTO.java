@@ -2,18 +2,39 @@ package com.nelioalves.backend.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.nelioalves.backend.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message = "Cannot be empty")
+	@Length(min = 5, max = 120, message = "Size between 5 and 120 caracters")
 	private String name;
+	
+	@NotEmpty(message = "Cannot be empty")
+	@Email(message = "Email invalid")
 	private String email;
+	
+	@NotEmpty(message = "Cannot be empty")
 	private String taxpayerNumber;
+	
 	private Integer type;
 	
+	@NotEmpty(message = "Cannot be empty")
 	private String sreetAddress;
+	
+	@NotEmpty(message = "Cannot be empty")
 	private String zipCode;
 	
+	@NotEmpty(message = "Cannot be empty")
 	private String phone1;
+	
 	private String phone2;
 	private String phone3;
 	
