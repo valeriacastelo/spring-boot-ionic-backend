@@ -69,6 +69,14 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		Category cat1 = new Category(null, "Computing");
 		Category cat2 = new Category(null, "Office");
+		Category cat3 = new Category(null, "Category A");
+		Category cat4 = new Category(null, "Category B");
+		Category cat5 = new Category(null, "Category C");
+		Category cat6 = new Category(null, "Category D");
+		Category cat7 = new Category(null, "Category E");
+		Category cat8 = new Category(null, "Category F");
+		Category cat9 = new Category(null, "Category G");
+		Category cat10 = new Category(null, "Category H");
 		
 		Product prod1 = new Product(null, "Computer", 2000.00);
 		Product prod2 = new Product(null, "Printer", 800.00);
@@ -91,7 +99,7 @@ public class SpringBootIonicBackendApplication implements CommandLineRunner{
 		s1.getCities().addAll(Arrays.asList(cit1));
 		s2.getCities().addAll(Arrays.asList(cit2, cit3));
 		
-		categoryRepo.saveAll(Arrays.asList(cat1, cat2));
+		categoryRepo.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
 		productRepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		
 		stateRepo.saveAll(Arrays.asList(s1,s2));
