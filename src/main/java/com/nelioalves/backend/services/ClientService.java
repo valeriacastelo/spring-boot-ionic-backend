@@ -35,11 +35,10 @@ public class ClientService {
 	}
 	
 	public Client update(Client obj) {
+		Client updateObj = find(obj.getId());
+		updateData(updateObj, obj);
 		
-		Client updateClient = find(obj.getId());
-		updateClient(updateClient, obj);
-		
-		return repo.save(updateClient);
+		return repo.save(updateObj);
 	}
 
 	public void delete(Integer id) {
@@ -64,9 +63,9 @@ public class ClientService {
 		return new Client(dto.getId(), dto.getName(), dto.getEmail(), null, null);
 	}
 	
-	private void updateClient(Client updateClient, Client obj) {
-		updateClient.setName(obj.getName());
-		updateClient.setEmail(obj.getEmail());
+	private void updateData(Client updateObj, Client obj) {
+		updateObj.setName(obj.getName());
+		updateObj.setEmail(obj.getEmail());
 	}
 
 }
