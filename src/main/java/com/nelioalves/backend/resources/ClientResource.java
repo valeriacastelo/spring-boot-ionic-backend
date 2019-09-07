@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nelioalves.backend.domain.Client;
 import com.nelioalves.backend.dto.ClientDTO;
+import com.nelioalves.backend.dto.ClientNewDTO;
 import com.nelioalves.backend.services.ClientService;
 
 @RestController
@@ -36,7 +37,7 @@ public class ClientResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody ClientDTO dto) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody ClientNewDTO dto) {
 		
 		Client obj = service.fromDTO(dto);
 		obj = service.insert(obj);
