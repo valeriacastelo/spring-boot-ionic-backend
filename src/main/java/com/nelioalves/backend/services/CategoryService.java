@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.backend.domain.Category;
+import com.nelioalves.backend.dto.CategoryDTO;
 import com.nelioalves.backend.repositories.CategoryRepository;
 import com.nelioalves.backend.services.exception.DataIntegrityException;
 import com.nelioalves.backend.services.exception.ObjectNotFoundException;
@@ -54,6 +55,10 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Category fromDTO(CategoryDTO categoryDTO) {
+		return new Category(categoryDTO.getId(), categoryDTO.getName());
 	}
 
 }
