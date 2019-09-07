@@ -3,10 +3,12 @@ package com.nelioalves.backend.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.backend.domain.Category;
 import com.nelioalves.backend.repositories.CategoryRepository;
+import com.nelioalves.backend.services.exception.DataIntegrityException;
 import com.nelioalves.backend.services.exception.ObjectNotFoundException;
 
 @Service
@@ -30,6 +32,16 @@ public class CategoryService {
 	public Category update(Category category) {
 		find(category.getId());
 		return repo.save(category);
+	}
+	
+	public void delete (Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch(DataIntegrityViolationException ex) {
+			throw new DataIntegrityException("Not possible delete a Category with associated Products");
+		}
+		
 	}
 
 }
