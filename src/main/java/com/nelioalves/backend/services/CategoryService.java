@@ -29,14 +29,14 @@ public class CategoryService {
 				+ "Id:[" + id + "] Type:[" + Category.class.getName() + "]"));
 	}
 	
-	public Category insert(Category category) {
-		category.setId(null);
-		return repo.save(category);
+	public Category insert(Category obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 	
-	public Category update(Category category) {
-		find(category.getId());
-		return repo.save(category);
+	public Category update(Category obj) {
+		find(obj.getId());
+		return repo.save(obj);
 	}
 	
 	public void delete (Integer id) {
@@ -57,8 +57,8 @@ public class CategoryService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Category fromDTO(CategoryDTO categoryDTO) {
-		return new Category(categoryDTO.getId(), categoryDTO.getName());
+	public Category fromDTO(CategoryDTO dto) {
+		return new Category(dto.getId(), dto.getName());
 	}
 
 }

@@ -1,13 +1,19 @@
 package com.nelioalves.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.nelioalves.backend.domain.Category;
 import com.nelioalves.backend.domain.Client;
+import com.nelioalves.backend.dto.ClientDTO;
 import com.nelioalves.backend.repositories.ClientRepository;
+import com.nelioalves.backend.services.exception.DataIntegrityException;
 import com.nelioalves.backend.services.exception.ObjectNotFoundException;
 
 @Service
@@ -20,7 +26,47 @@ public class ClientService {
 		Optional<Client> op = repo.findById(id);
 		
 		return op.orElseThrow(() -> new ObjectNotFoundException("Object not found! "
-				+ "Id:[" + id + "] Type:[" + Category.class.getName() + "]"));
+				+ "Id:[" + id + "] Type:[" + Client.class.getName() + "]"));
+	}
+	
+	public Client insert(Client obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	public Client update(Client obj) {
+		
+		Client updateClient = find(obj.getId());
+		updateClient(updateClient, obj);
+		
+		return repo.save(updateClient);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch(DataIntegrityViolationException ex) {
+			throw new DataIntegrityException("Not possible delete a Client with associated entities");
+		}
+	}
+	
+	public List<Client> findAll() {
+		return repo.findAll();
+	}
+	
+	public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
+	}
+	
+	public Client fromDTO(ClientDTO dto) {
+		return new Client(dto.getId(), dto.getName(), dto.getEmail(), null, null);
+	}
+	
+	private void updateClient(Client updateClient, Client obj) {
+		updateClient.setName(obj.getName());
+		updateClient.setEmail(obj.getEmail());
 	}
 
 }

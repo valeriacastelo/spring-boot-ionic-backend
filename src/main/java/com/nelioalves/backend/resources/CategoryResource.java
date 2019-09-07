@@ -31,31 +31,31 @@ public class CategoryResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Category> find (@PathVariable Integer id) {
 		
-		Category category = service.find(id);
-		return ResponseEntity.ok(category);
+		Category obj = service.find(id);
+		return ResponseEntity.ok(obj);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody CategoryDTO categoryDTO) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody CategoryDTO dto) {
 		
-		Category category = service.fromDTO(categoryDTO);
-		category = service.insert(category);
+		Category obj = service.fromDTO(dto);
+		obj = service.insert(obj);
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand(category.getId())
+				.buildAndExpand(obj.getId())
 				.toUri();
 		
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update (@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable Integer id) {				
+	public ResponseEntity<Void> update (@Valid @RequestBody CategoryDTO dto, @PathVariable Integer id) {				
 		
-		Category category = service.fromDTO(categoryDTO);
-		category.setId(id);
-		service.update(category);
+		Category obj = service.fromDTO(dto);
+		obj.setId(id);
+		service.update(obj);
 		
 		return ResponseEntity.noContent().build();
 	}
