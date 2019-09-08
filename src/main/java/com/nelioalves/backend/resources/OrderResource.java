@@ -20,8 +20,8 @@ public class OrderResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Order> find (@PathVariable Integer id) {
 		
-		Order client = service.find(id);
-		return ResponseEntity.ok(client);
+		Order obj = service.find(id);
+		return ResponseEntity.ok(obj);
 	}
 
 }
