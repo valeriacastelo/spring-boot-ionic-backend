@@ -1,6 +1,8 @@
 package com.nelioalves.backend.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -136,6 +138,32 @@ public class Order implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Order Details");
+		builder.append("\n");
+		builder.append("Date: ");
+		builder.append(sdf.format(date));
+		builder.append("\n");
+		builder.append("Payment: ");
+		builder.append(payment.getStatus().getDescription());
+		builder.append("\n");
+		builder.append("Client: ");
+		builder.append(client.getName());
+		builder.append("\n");
+		builder.append("itens");
+		builder.append(itens);
+		builder.append("\n");
+		builder.append("Total: ");
+		builder.append(nf.format(getTotal()));
+		
+		return builder.toString();
 	}
 	
 }

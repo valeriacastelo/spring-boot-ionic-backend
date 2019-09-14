@@ -1,6 +1,7 @@
 package com.nelioalves.backend.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -108,4 +109,22 @@ public class OrderItem implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("[Product: ");
+		builder.append(getProduct().getName());
+		builder.append(", Price: ");
+		builder.append(nf.format(price));
+		builder.append(", SubTotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("]");
+		
+		return builder.toString();
+	}
+
+	
 }
