@@ -10,7 +10,6 @@ import com.nelioalves.backend.domain.Category;
 import com.nelioalves.backend.domain.InvoicePayment;
 import com.nelioalves.backend.domain.Order;
 import com.nelioalves.backend.domain.OrderItem;
-import com.nelioalves.backend.domain.Product;
 import com.nelioalves.backend.domain.enums.PaymentStatus;
 import com.nelioalves.backend.repositories.OrderItemRepository;
 import com.nelioalves.backend.repositories.OrderRepository;
