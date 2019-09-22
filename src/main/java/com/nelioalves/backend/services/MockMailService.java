@@ -1,5 +1,7 @@
 package com.nelioalves.backend.services;
 
+import javax.mail.internet.MimeMessage;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,5 +15,13 @@ public class MockMailService extends AbstractEmailService {
 		LOG.info("Mocking the email sending");
 		LOG.info(msg.toString());
 		LOG.info("Email has been sent");
+	}
+
+	@Override
+	public void sendHtmlEmail(MimeMessage msg) {
+		LOG.info("Mocking the HTML email sending");
+		LOG.info(msg.toString());
+		LOG.info("Email has been sent");
+		
 	}
 }

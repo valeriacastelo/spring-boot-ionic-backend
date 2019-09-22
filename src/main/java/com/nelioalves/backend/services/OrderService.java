@@ -70,7 +70,7 @@ public class OrderService {
 		}
 		
 		orderItemRepo.saveAll(obj.getItens());
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		
 		return obj;
 	}
