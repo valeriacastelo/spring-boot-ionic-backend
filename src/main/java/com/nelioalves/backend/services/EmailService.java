@@ -1,8 +1,7 @@
 package com.nelioalves.backend.services;
 
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import com.nelioalves.backend.domain.Order;
 
@@ -14,6 +13,6 @@ public interface EmailService {
 	
 	void sendOrderConfirmationHtmlEmail(Order obj);
 	
-	void sendHtmlEmail(MimeMessage msg);
+	void sendHtmlEmail(MimeMessagePreparator msg);
 
 }
