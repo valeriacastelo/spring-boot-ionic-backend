@@ -21,6 +21,7 @@ import com.nelioalves.backend.domain.Product;
 import com.nelioalves.backend.domain.State;
 import com.nelioalves.backend.domain.enums.ClientType;
 import com.nelioalves.backend.domain.enums.PaymentStatus;
+import com.nelioalves.backend.domain.enums.Profile;
 import com.nelioalves.backend.repositories.AddressRepository;
 import com.nelioalves.backend.repositories.CategoryRepository;
 import com.nelioalves.backend.repositories.CityRepository;
@@ -125,14 +126,19 @@ public class DBService {
 		cityRepo.saveAll(Arrays.asList(cit1,cit2, cit3));
 		
 		Client cli1 = new Client(null, "Maria Silva", "akimdev@gmail.com", "36378912377", ClientType.PERSON, pe.encode("123"));
+		Client cli2 = new Client(null, "Ana Costa", "akimdev2@gmail.com", "30544733509", ClientType.PERSON, pe.encode("123"));
+		cli2.addProfile(Profile.ADMIN);
 		
 		Address add1 = new Address(null, "Apto 203, 300 Rua Flores, Jardim", "38220834", cit1, cli1);
 		Address add2 = new Address(null, "Sala 108, 105 Avenida Matos, Centro", "38777012", cit2, cli1);
+		Address add3 = new Address(null, "Apt 06, 105 Avenida Floriano, Centro", "09878909", cit2, cli2);
 		
 		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
-		cli1.getAddresses().addAll(Arrays.asList(add1, add2));
+		cli1.getAddresses().addAll(Arrays.asList(add1, add2, add3));
 		
-		clientRepo.save(cli1);
+		cli2.getPhones().addAll(Arrays.asList("67894586", "56454356"));
+		
+		clientRepo.saveAll(Arrays.asList(cli1, cli2));
 		addressRepo.saveAll(Arrays.asList(add1, add2));
 		
 		
